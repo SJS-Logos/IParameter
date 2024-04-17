@@ -9,8 +9,6 @@ public:
   virtual void update() = 0;
   virtual ~LogosNotifiable();
   
-  // These are for use when registering 
-  static void updateStatic(void* ThisContext, int ParameterIndex, LisaVariant* Parameter);
 private:
   LogosObservable* observer_;
 };
@@ -32,7 +30,6 @@ public:
 
   void update();
 private:
-
   struct LinkedElement {
     LogosNotifiable* notifiable_;
     LinkedElement* next_;

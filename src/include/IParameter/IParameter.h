@@ -4,14 +4,14 @@
 #include "Util/ObserverHelper.h"
 
 template <typename T>
-class IParameter : public LogosObservable {
+class IParameter {
 public:
   virtual T get() const = 0;
   virtual void set( const T value ) = 0;
 };
 
 template <typename T, class Converter = StringHelper, class Facade = Lisa2_Facade>
-class IParameterLisa2Helper : public IParameter<T> {
+class IParameterLisa2Helper : public IParameter<T>, public LogosObservable {
 public:
   explicit IParameterLisa2Helper( Facade& facadeInstance = *Facade::GetInstance() ) :
         facadeInstance_( facadeInstance ), parameterIndex_(0), defaultValue_(defaultValue)
@@ -19,6 +19,7 @@ public:
   }
 
   static void updateStatic(void* ThisContext, int /*ParameterIndex*/, LisaVariant* /*Parameter*/ ) {
+    
     ((IParameterLisa2Helper)ThisContext)->Update();
   }
 
