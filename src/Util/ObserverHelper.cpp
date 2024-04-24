@@ -1,11 +1,6 @@
 #include "ObserverHelper.h"
 #include <memory>
 
-void LogosNotifiable::updateStatic(void* ThisContext, int ParameterIndex, LisaVariant* Parameter)
-{
-  ((LogosNotifiable*)ThisContext)->update();
-}
-
 bool NotifiableBool::checkChangedAndClear()
 {
   bool isChangedLocal = isChanged_;
@@ -21,10 +16,6 @@ void NotifiableBool::update()
 LogosNotifiable::~LogosNotifiable() 
 {
   observer_->detach(this);
-}
-
-LogosObservable::LogosObservable() : linked_list_(nullptr)
-{  
 }
 
 void LogosObservable::attach( LogosNotifiable* notifiable)
@@ -62,7 +53,7 @@ void LogosObservable::detach( LogosNotifiable* notifiable)
     else {
       linked_list_ = i->next_;
     }
-    free(i);
+    delete i;
   }
 }
 

@@ -1,8 +1,9 @@
 #ifndef OBSERVER_HELPER_H
 #define OBSERVER_HELPER_H
 
+#include "LogosTypes.h"
+
 class LogosObservable;
-class LisaVariant;
 
 class LogosNotifiable {
 public:
@@ -20,6 +21,7 @@ public:
 private:
   bool isChanged_;
 };
+
 
 
 class LogosObservable {

@@ -11,7 +11,7 @@ public:
 };
 
 template <typename T, class Converter = StringHelper, class Facade = Lisa2_Facade>
-class IParameterLisa2Helper : public IParameter<T>, public LogosObservable {
+class IParameterLisa2Helper : public IParameter<T>, public LogosLisaObservable {
 public:
   explicit IParameterLisa2Helper( Facade& facadeInstance = *Facade::GetInstance() ) :
         facadeInstance_( facadeInstance ), parameterIndex_(0), defaultValue_(defaultValue)
@@ -27,7 +27,7 @@ public:
   {
     parameterIndex_ = parameterIndex;
     if ( isObservable ) {
-      facadeInstance_.AddChangeEvent(parameterIndex_, this, updateStatic);
+      LogosLisaObservable::bind( parameterIndex );
     }
   }
   
