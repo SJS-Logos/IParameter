@@ -1,7 +1,8 @@
 #ifndef IPARAMETER_H
 #define IPARAMETER_H
 
-#include "Util/ObserverHelper.h"
+#include "Util/LogosLisaObservable.h"
+#include "Util/StringHelper.h"
 
 template <typename T>
 class IParameter {
@@ -10,11 +11,13 @@ public:
   virtual void set( const T value ) = 0;
 };
 
+class Lisa2_Facade;
+
 template <typename T, class Converter = StringHelper, class Facade = Lisa2_Facade>
 class IParameterLisa2Helper : public IParameter<T>, public LogosLisaObservable {
 public:
   explicit IParameterLisa2Helper( Facade& facadeInstance = *Facade::GetInstance() ) :
-        facadeInstance_( facadeInstance ), parameterIndex_(0), defaultValue_(defaultValue)
+        facadeInstance_( facadeInstance ), parameterIndex_(0)
   {
   }
 
@@ -27,7 +30,7 @@ public:
   {
     parameterIndex_ = parameterIndex;
     if ( isObservable ) {
-      LogosLisaObservable::bind( parameterIndex );
+      LogosLisaObservable::bind( facadeInstance_, parameterIndex );
     }
   }
   
@@ -35,13 +38,15 @@ public:
   {
     char buffer[ 2048 ];
     int returnValue = facadeInstance_.GetParameterValue(parameterIndex_, buffer, sizeof(buffer));
+    T result;
     if ( returnValue != 0 ) {
       // Log Critical error. Parameter does not exist
-      return defaultValue_;
+      Converter::from_string( &result, std::string("") );
     }
     else {
-      return Converter::from_string( std::string( buffer ), defaultValue_);
+      Converter::from_string( &result, std::string( buffer ) );
     }
+    return result;
   }	
 
   virtual void set( const T value ) 
@@ -55,7 +60,6 @@ public:
 private:
   Facade& facadeInstance_;
   int parameterIndex_;
-  const int defaultValue_;
   Converter cnv;
 };
 

@@ -4,9 +4,9 @@
 #include <string>
 
 struct StringHelper {
-  static std::string from_string(const std::string& zString, const std::string& defaultValue);
+  static bool from_string( std::string* dst, const std::string src );
   static std::string to_string(const std::string& zString);
-  static int from_string(const std::string& zString, int defaultValue);
+  static bool from_string(int* dst, const std::string src);
   static std::string to_string(int value );
 };
 
