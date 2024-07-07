@@ -1,0 +1,120 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+
+\usepackage{minted}
+
+\begin{document}
+
+\title{Configuration Parameters}
+\author{Steen J. Sannung \texttt{sjs@logos.dk} \\
+Logos Payment Solutions A/S }
+\date{\today}
+
+\maketitle
+
+\section{}
+
+\section{Lisa2 Definitions}
+
+The Lisa2 parameter system has several components, each playing an important role in administering and deploying configuration parameters throughout our software solutions.
+\begin{itemize}
+\item Lisa2 Client is the software solution, which changes/reads the parameters, and puts them to use in realworld context. 
+\item Lisa2 Server is a database which contains the values and ids for each "Lisa2 Client".
+\item The PayManager web application, implements a "Lisa2 Client", capable of changing/viewing parameter values for other "Lisa2 Clients". 
+\end{itemize}
+
+The following software definitions, defines a parameter set. Generally speaking a parameter is defined in the context of a Lisa2 Client - 
+meaning there is a list of parameters id's mapped to values for each Lisa2 Client.
+
+
+\begin{itemize}
+\item Logos Id is an identifier which uniquely identifies a Lisa2 Client. 
+\item Parameter Id is an identifier which uniquely identifies a parameter and it's configuration.
+\item Parameter Configuration is a parameter specific list of attributes used for defining how values must be displayed/edited and transferred. The is only one configuration for each Lisa2 Server.
+\item Parameter Value is a string values, which is related to Parameter Id. Parameter Values can be different for each Lisa2 Client.
+\item Parameter Range is a Lisa2 Client specific list of values, defined for each parameter id. This values acts as a hint at how the Parameter should be displayed. 
+When a range is set PayManager will display a "drop down list" with suggested values.
+\end{itemize}
+
+The Lisa2 parameter system uses a list of unique keys (parameter index), which are each mapped to a string parameter value.
+The parameter list can be maintained for each terminal from PayManager.  
+
+For each parameter there is a set of parameter configurations, which are meant to act as guides for displaying/editing values from PayManager. 
+The parameter configuration has little value for the terminal, and is only used for optimizing which parameters are sent to the server.
+q
+Each terminal contains it's own list of parameter configurations, which is meant to be a copy of the server's parameter configuration. 
+It is a topic of many discussions, what value the parameter configurations hold for the terminal
+  
+
+There are two values, which are helpful in "restricting" user input in PayManager:
+\begin{itemize}
+\item A terminal specific parameter range, which is stored for each parameter index. This range is formatted as a semicolon(;) delimited list of string identifiers. 
+The list does not prohibit the input of "wrong" values in the specific parameter value, but it makes PayManager display a "drop down list" with suggested values.
+\item Each parameter is born with a type parameter related to it. This type is a string describing the type. Possible values are "string", "dateTime", "integer", "headline",
+"subheadline", "boolean", "date", "ipv4addr", "ipv4port". The type is a hint to PayManager on how to display/edit each parameter.
+\end{itemize}
+
+The model presented in this document, aims at introducing "use cases" for problems involiving the use of the Lisa2 parameter system.
+
+\begin{itemize}
+\item Modularity: It's essential to develop modules independently, avoiding reliance on global identifiers to simplify testing and maintenance.
+\item Typed Values: Values within configurations must adhere to specific data types.
+\subitem The model must incorporate use cases which encourages the use of library conversions between Lisa2 values and C++ variables. 
+\item Dynamic Nature: Values may change over time, necessitating mechanisms to track these changes.
+\end{itemize}
+
+
+\section{Modularity}
+The main problem about using global values to refer to specific parameters in Your code, is that the "identifier" is indeed a global
+and can thus be viewed as a magic value, even though it is tied to a database of global identifiers.
+
+There solution to this problem, it to 
+
+\section{Typed values}
+
+The most practical approach for a value model is to employ the . 
+Nevertheless, a drawback of this model is its inability to perform compile-time checks to ensure that the type matches the parameter in question. 
+Thinking about how
+One potential solution to this issue involves implementing a templated approach. This would utilize C++'s own typing system to define values. 
+
+\begin{minted}{c++}
+template <typename T>
+class IParameter {
+public:
+    virtual T get( const T& defaultValue ) const = 0;
+    virtual void set( const T& value ) = 0;
+};
+\end{minted}
+
+All parameters could be accessible through a Factory, using the following pattern:
+
+\begin{minted}{c++}
+class IParameterFactory {
+public:
+  IParameter<int> terminalId() {
+    return new IParameterHelper<int>( TERMINAL_ID_UID );
+  }
+
+  
+};
+\end{minted}
+
+
+\subsection{Reading parameters in a module}
+Basically paramters are 
+
+
+\section{What is a tag}
+
+The tag is a universal identifier, which must be registered centrally, in order to be universal within the scope of the parameter.  
+
+For each identifier, a number of values exist.
+
+To communicate 
+
+\section{An interface to send}
+
+\end{document}
