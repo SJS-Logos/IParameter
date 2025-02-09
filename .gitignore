@@ -3,8 +3,12 @@
 /cmake-build*/
 /conan/
 /.idea/
-/.vs/
+.vs/
 /CMakeUserPresets.json
 /test_package/conan
 /test_package/CMakeUserPresets.json
 /build/ 
+/LogosCmakeScripts/
+/OsInterface/
+/OsUtil/
+/iDebugDummy/
