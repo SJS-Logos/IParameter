@@ -1,0 +1,9 @@
+/bash/
+/cmake/
+/cmake-build*/
+/conan/
+/.idea/
+/CMakeUserPresets.json
+/test_package/conan
+/test_package/CMakeUserPresets.json
+/build/ 
