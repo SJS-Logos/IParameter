@@ -3,6 +3,7 @@
 /cmake-build*/
 /conan/
 /.idea/
+/.vs/
 /CMakeUserPresets.json
 /test_package/conan
 /test_package/CMakeUserPresets.json
