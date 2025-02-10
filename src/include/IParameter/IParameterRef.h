@@ -30,25 +30,34 @@
     
     inline void initializeConfig(Configuration& config)
     {
-      config.id.forward(new StaticParameter<int>(101));
-      config.name.forward(new StaticParameter<std::string>("Test_User"));       
+      config.id.emplace(StaticParameter<int>, 101);
+      config.name.emplace(StaticParameter<std::string>, "Test_User");
     }
 */
 template <typename T>
 class IParameterRef {
 public:
-    explicit IParameterRef() : _ownedParameter(NULL) {}
+    explicit IParameterRef() : _ownedParameter(nullptr) {}
 
 private:
     IParameterRef(const IParameterRef&);
     IParameterRef& operator=(const IParameterRef&);
 
 public:
-    IParameterRef& forward(IParameter<T>* rhs) {
+    template <typename Type, typename P1>
+    IParameterRef& emplace(Type type, P1 p1) {
         if (_ownedParameter) delete _ownedParameter;
-        _ownedParameter = rhs;
+        _ownedParameter = new type(p1);
         return *this;
-    }
+    }    
+    
+    template <typename Type, typename P1, typename P2>
+    IParameterRef& emplace(Type type, P1 p1, P2 p2) {
+        if (_ownedParameter) delete _ownedParameter;
+        _ownedParameter = new type(p1,p2);
+        return *this;
+    }    
+    
 
     operator T() const { return *_ownedParameter; }
 
