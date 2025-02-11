@@ -7,7 +7,7 @@
 /CMakeUserPresets.json
 /test_package/conan
 /test_package/CMakeUserPresets.json
-/build/ 
+build/ 
 /LogosCmakeScripts/
 /OsInterface/
 /OsUtil/
