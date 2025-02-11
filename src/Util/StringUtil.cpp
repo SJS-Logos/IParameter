@@ -3,8 +3,8 @@
 //
 
 #include <string.h>
-#include "StringUtil.h"
-#include "LogosTypes.h"
+#include "IParameter/util/StringUtil.h"
+#include "OsUtil/LogosTypes.h"
 #include <ctype.h>
 #include <cstdlib>
 #include <errno.h>
