@@ -1,5 +1,6 @@
-cmake_minimum_required(VERSION 3.18.1)
-project(IParameterTests)
+cmake_minimum_required(VERSION 3.18)
+
+find_package(GTest REQUIRED)
 
 include(FetchContent)
 FetchContent_Declare(
@@ -20,7 +21,7 @@ add_executable(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME}
         PRIVATE
 
-        Logos::iDebugDummy
+        Logos::IParameter
         gmock_main
         gtest
         gmock
