@@ -1,14 +1,13 @@
 #include "IParameter.h"
-#include "OsUtil/Observer.h"
 
-/* This class can be used for building up structures of parameters
-   In a typical use case the configuration will be defined in a system independant 
+/* This class can be used for building structures of parameters
+   In a typical use case the configuration will be defined in a system independent file:
    
-   file:
    // Configuration: A structure with public IParameterRef fields
     struct Configuration {
       IParameterRef<int> id;
       IParameterRef<std::string> name;
+      std::vector<IParameterRef<amount_t> > priceList;
 
       Configuration() {}
     };
@@ -32,6 +31,9 @@
     {
       config.id.emplace(StaticParameter<int>, 101);
       config.name.emplace(StaticParameter<std::string>, "Test_User");
+      for (size_t i=0; i < 10; i++) {
+        priceList.emplace_back( IParameterRef<amount_t> ).emplace( StaticParameter<amount_t>, 2500 );
+      }
     }
 */
 template <typename T>
@@ -57,7 +59,6 @@ public:
         _ownedParameter = new type(p1,p2);
         return *this;
     }    
-    
 
     operator T() const { return *_ownedParameter; }
 
@@ -66,14 +67,6 @@ public:
         return *this;
     }
     
-    void attach(Observer< IParameter<T> >* observer) {
-        _ownedParameter.attach( observer );
-    }
-
-    void detach(Observer< IParameter<T> >* observer) {
-        _ownedParameter->detach(observer);
-    }    
-
     ~IParameterRef() { delete _ownedParameter; }
 
 private:

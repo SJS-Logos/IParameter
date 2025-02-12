@@ -8,6 +8,7 @@
 /test_package/conan
 /test_package/CMakeUserPresets.json
 build/ 
+__pycache__/ 
 /LogosCmakeScripts/
 /OsInterface/
 /OsUtil/

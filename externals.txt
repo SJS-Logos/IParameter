@@ -1,4 +1,6 @@
+https://github.com/google/googletest/tag/v1.13.0 googletest
 https://github.com/Logos-Payment-Solution/LogosCmakeScripts/tag/2024.02.09.3 LogosCmakeScripts
 https://github.com/Logos-Payment-Solution/OsInterface/tag/v2024.04.30.1 OsInterface
 https://github.com/Logos-Payment-Solution/OsUtil/tag/v2024.05.17.1 OsUtil
 https://github.com/Logos-Payment-Solution/iDebugDummy/tag/v0.0.2 iDebugDummy
+https://github.com/Logos-Payment-Solution/LogosText/branch/main LogosText
