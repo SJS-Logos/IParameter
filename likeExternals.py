@@ -28,13 +28,13 @@ def updateSubversion(url, name):
 
 def updateGit(url, name):
     parts = url.split('/')
-    if parts[2] != 'github.com' or parts[3] != 'Logos-Payment-Solution':
+    if parts[2] != 'github.com':
         raise Exception("url mismatch!")
         return
 
     path = Path(parts[4])
     if not path.exists():
-        actualUrl = f'git@github.com:Logos-Payment-Solution/{parts[4]}.git'
+        actualUrl = f'{parts[0]}/{parts[1]}/{parts[2]}/{parts[3]}/{parts[4]}.git'
         subprocess.run(['git', 'clone', actualUrl, name], check=True)
 
     # Ensure correct tag or branch
