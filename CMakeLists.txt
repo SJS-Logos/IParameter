@@ -14,14 +14,14 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(googletest)
 
 set(EXTERNALS
-        OsInterface
-        OsUtil
-        LogosText
-        iDebugDummy
+        OsInterface/src
+        OsUtil/src
+        LogosText/src
+        iDebugDummy/src
+        GoogleTest
 )
-
 foreach(external ${EXTERNALS})
-    add_subdirectory("${external}/src")
+    add_subdirectory("${external}")
 endforeach()
 
 add_subdirectory(src)
