@@ -1,3 +1,4 @@
+#include <memory>
 #include "IParameter.h"
 
 /* This class can be used for building structures of parameters
@@ -46,29 +47,59 @@ private:
     IParameterRef& operator=(const IParameterRef&);
 
 public:
-    template <typename Type, typename P1>
-    IParameterRef& emplace(Type type, P1 p1) {
-        if (_ownedParameter) delete _ownedParameter;
-        _ownedParameter = new type(p1);
-        return *this;
-    }    
-    
-    template <typename Type, typename P1, typename P2>
-    IParameterRef& emplace(Type type, P1 p1, P2 p2) {
-        if (_ownedParameter) delete _ownedParameter;
-        _ownedParameter = new type(p1,p2);
-        return *this;
-    }    
+  // Emplace function: Constructs an IParameter<T> instance in place (default constructor)
+  template <typename ParamType>
+  IParameterRef& emplace() {
+    if (_ownedParameter)
+      delete _ownedParameter; // Clean up existing resource
 
-    operator T() const { return *_ownedParameter; }
+    _ownedParameter = new ParamType(); // Construct in-place
+    return *this;
+  }
 
-    IParameterRef& operator=(const T& other) {
-        if (_ownedParameter) *_ownedParameter = other;
-        return *this;
-    }
+  // Emplace function with 1 argument
+  template <typename ParamType, typename P1>
+  IParameterRef& emplace(P1 p1) {
+    if (_ownedParameter)
+      delete _ownedParameter;
+
+    _ownedParameter = new ParamType(p1);
+    return *this;
+  }
+
+  // Emplace function with 2 arguments
+  template <typename ParamType, typename P1, typename P2>
+  IParameterRef& emplace(P1 p1, P2 p2) {
+    if (_ownedParameter)
+      delete _ownedParameter;
+
+    _ownedParameter = new ParamType(p1,p2);
+    return *this;
+  }
+
+  operator T() const { return *_ownedParameter; }
+
+  IParameterRef& operator=(const T& other) {
+      if (_ownedParameter) *_ownedParameter = other;
+      return *this;
+  }
     
-    ~IParameterRef() { delete _ownedParameter; }
+  ~IParameterRef() { delete _ownedParameter; }
 
 private:
     IParameter<T>* _ownedParameter;
 };
+
+bool operator==(const IParameterRef<std::string>& lhs, const char* rhs) {
+  return static_cast<std::string>(lhs) == std::string(rhs);
+}
+
+template <typename T>
+bool operator==(const IParameterRef<T>& lhs, const T& rhs) {
+  return static_cast<T>(lhs) == static_cast<T>(rhs);
+}
+
+template <typename T>
+bool operator==(const T& lhs, const IParameterRef<T>& rhs) {
+  return static_cast<T>(lhs) == static_cast<T>(rhs);
+}

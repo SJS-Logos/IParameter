@@ -11,4 +11,5 @@ public:
   virtual ~IParameter() {}
 };
 
+
 #endif // IPARAMETER_H

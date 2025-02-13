@@ -19,16 +19,18 @@ Logos Payment Solutions A/S }
 
 \section{Lisa2 Definitions}
 
-The Lisa2 parameter system has several components, each playing an important role in administering and deploying configuration parameters throughout our software solutions.
+The Lisa2 parameter system is a client/server system, used for administering and deploying configuration parameters throughout our software solutions.
 \begin{itemize}
-\item Lisa2 Client is the software solution, which changes/reads the parameters, and puts them to use in realworld context. 
+\item Lisa2 Client is a software solution, which changes/reads the parameters, and puts them to use in realworld context. 
 \item Lisa2 Server is a database which contains the values and ids for each "Lisa2 Client".
-\item The PayManager web application, implements a "Lisa2 Client", capable of changing/viewing parameter values for other "Lisa2 Clients". 
 \end{itemize}
+
+The PayManager application, implements a "Lisa2 Client", capable of changing/viewing parameter values for other "Lisa2 Clients". Much of
+the design has been centered on making PayManager capable of displaying a sensible user interface. 
+There is a configuration for each parameter, which details how it should be shown/edited in PayManager.
 
 The following software definitions, defines a parameter set. Generally speaking a parameter is defined in the context of a Lisa2 Client - 
 meaning there is a list of parameters id's mapped to values for each Lisa2 Client.
-
 
 \begin{itemize}
 \item Logos Id is an identifier which uniquely identifies a Lisa2 Client. 

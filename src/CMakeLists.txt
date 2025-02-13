@@ -1,8 +1,8 @@
 include(versioning)
 parseVersionFile(fileVersion)
-project(IParameter VERSION ${fileVersion})
+project(IParameterLib VERSION ${fileVersion})
 set(LIB_NAME "${PROJECT_NAME}")
-cmake_minimum_required(VERSION 3.28.1)
+cmake_minimum_required(VERSION 3.28.1 )
 
 
 message("Building " ${PROJECT_NAME} " as static library")
